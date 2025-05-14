@@ -1,7 +1,7 @@
 {
   "name": "playwright-ui-api-ts",
   "version": "1.0.0",
-  "description": "",
+  "description": "UI automation with Playwright using TypeScript. API tests coming soon.",
   "main": "index.js",
   "scripts": {
     "practice-test": "npx playwright test tests/practice.spec.ts"
