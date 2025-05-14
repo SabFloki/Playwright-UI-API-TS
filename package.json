@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "practice-test": "npx playwright test tests/practice.spec.ts"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/SabFloki/Playwright-UI-API-TS.git"
