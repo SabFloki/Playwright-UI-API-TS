@@ -12,6 +12,7 @@ test.describe('Home', () => {
         await page.goto('https://practice.sdetunicorns.com/about/')
         //verify title
         await expect(page).toHaveTitle('About – Practice E-Commerce Site')
+        await expect(page).toHaveTitle(/.*Practice E-Commerce Site/)
     })
 
     test('Click get started button using CSS Selector', async ({ page }) => {
