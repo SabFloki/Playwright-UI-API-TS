@@ -1,4 +1,4 @@
-name: Run Playwright Tests on Merge to Main
+name: Run Playwright Tests on Merge to Main - trial test
 
 on:
   push:
