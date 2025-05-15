@@ -4,7 +4,7 @@
   "description": "UI automation with Playwright using TypeScript. API tests coming soon.",
   "main": "index.js",
   "scripts": {
-    "practice-test": "npx playwright test tests/practice.spec.ts"
+    "practice-test": "npx playwright test tests/ui/practice.spec.ts"
   },
   "repository": {
     "type": "git",
