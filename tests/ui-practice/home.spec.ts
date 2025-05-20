@@ -1,5 +1,4 @@
-import { test, expect } from '@playwright/test'
-import HomePage from '../../pages/home.page'
+import { test, expect } from '../../pages/fixtures/pages.fixture'
 
 test.describe('Home', () => {
 
@@ -17,19 +16,18 @@ test.describe('Home', () => {
         await expect(page).toHaveTitle(/.*Practice E-Commerce Site/)
     })
 
-    test('Click get started button using CSS Selector', async ({ page }) => {
-        const homePage = new HomePage(page)
-        await page.goto('https://practice.sdetunicorns.com')
+    test('Click get started button using CSS Selector', async ({ page, homePage }) => {
 
+        await homePage.navigate()
         //click the button
         await homePage.getStartedBtn.click()
         //verify url has #get-started
         await expect(page).toHaveURL(/.*#get-started/)
     })
 
-    test('Verify heading text using text selector', async ({ page }) => {
-        const homePage = new HomePage(page)
-        await page.goto('https://practice.sdetunicorns.com')
+    test('Verify heading text using text selector', async ({ page, homePage }) => {
+
+        await homePage.navigate()
 
         //click the button
         const headingText = await homePage.headingText
@@ -38,9 +36,9 @@ test.describe('Home', () => {
         await expect(headingText).toBeVisible()
     })
 
-    test('Verify home link using text and css', async ({ page }) => {
-        const homePage = new HomePage(page)
-        await page.goto('https://practice.sdetunicorns.com')
+    test('Verify home link using text and css', async ({ page, homePage }) => {
+
+        await homePage.navigate()
 
         //click the button
         const homeText = await homePage.homeText
@@ -49,9 +47,9 @@ test.describe('Home', () => {
         await expect(homeText).toBeEnabled()
     })
 
-    test('Verify home link using text and css - method 2', async ({ page }) => {
-        const homePage = new HomePage(page)
-        await page.goto('https://practice.sdetunicorns.com')
+    test('Verify home link using text and css - method 2', async ({ page, homePage }) => {
+
+        await homePage.navigate()
 
         //click the button
         const homeText = await homePage.homeTextCSS
@@ -60,12 +58,12 @@ test.describe('Home', () => {
         await expect(homeText).toBeEnabled()
     })
 
-    test('Capture menu items and verify the nth item', async ({ page }) => {
-        const homePage = new HomePage(page)
+    test('Capture menu items and verify the nth item', async ({ page, homePage }) => {
+
         const expectedItems = [
             'Home', 'About', 'Shop', 'Blog', 'Contact', 'My account'
         ]
-        await page.goto('https://practice.sdetunicorns.com')
+        await homePage.navigate()
 
         const menuItems = await homePage.navLinks
 
@@ -75,7 +73,7 @@ test.describe('Home', () => {
         }
 
         //verify menu items
-        expect(await menuItems.allTextContents()).toEqual(expectedItems)
+        expect(await homePage.getNavLinks()).toEqual(expectedItems)
 
         //verify menu items with nth item
         expect(await menuItems.nth(3).textContent()).toEqual(expectedItems[3])

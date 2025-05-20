@@ -1,7 +1,7 @@
 import { Page, Locator } from "playwright"
 
 class HomePage {
-    page: any
+    page: Page
     locator: Locator
     getStartedBtn: Locator
     headingText: Locator
@@ -16,6 +16,14 @@ class HomePage {
         this.homeText = page.locator('#zak-primary-menu >> text=Home')
         this.homeTextCSS = page.locator('#zak-primary-menu:has-text("Home")')
         this.navLinks = page.locator('#zak-primary-menu li')
+    }
+
+    async navigate() {
+        await this.page.goto('https://practice.sdetunicorns.com')
+    }
+
+    async getNavLinks() {
+        return this.navLinks.allTextContents()
     }
 
 
