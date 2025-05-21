@@ -1,35 +1,32 @@
-import { test, expect } from '@playwright/test'
+import { test, expect } from '../../pages/fixtures/pages.fixture'
 const path = require('path')
 
 test.describe('Upload functionality', () => {
 
-    test('Upload the file and verify with conditional wait', async ({ page }) => {
+    test('Upload the file and verify with conditional wait', async ({ page, cartPage }) => {
+
         await page.goto('https://practice.sdetunicorns.com/cart/')
 
         //set filpath of image
         const filePath = path.join(__dirname, '../../snap/image.png')
 
         //set the file and click on upload
-        await page.setInputFiles('input#upfile_1', filePath)
-
-        await page.locator('#upload_1').click()
-
-        await page.locator('#wfu_messageblock_header_1_1').waitFor({ state: 'visible', timeout: 10000 })
+        await cartPage.uploadComponent().uploadFile(filePath)
 
         //assert the uploaded file
-        await expect(page.locator('#wfu_messageblock_header_1_1')).toContainText('successfully')
+        await expect(cartPage.uploadComponent().message).toContainText('successfully')
     })
 
-    test('Upload the file and verify with assertion wait', async ({ page }) => {
+    test('Upload the file and verify with assertion wait', async ({ page, cartPage }) => {
+
         await page.goto('https://practice.sdetunicorns.com/cart/')
 
         //set filpath of image
         const filePath = path.join(__dirname, '../../snap/image.png')
 
         //set the file and click on upload
-        await page.setInputFiles('input#upfile_1', filePath)
-
-        await page.locator('#upload_1').click()
+        //set the file and click on upload
+        await cartPage.uploadComponent().uploadFile(filePath)
 
         //assert the uploaded file
         await expect(page.locator('#wfu_messageblock_header_1_1')).toContainText('successfully', { timeout: 10000 })
