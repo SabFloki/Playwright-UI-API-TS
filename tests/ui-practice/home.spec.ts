@@ -78,4 +78,32 @@ test.describe('Home', () => {
         //verify menu items with nth item
         expect(await menuItems.nth(3).textContent()).toEqual(expectedItems[3])
     })
+
+    test('Find broken links on the page and retrieve the numbers', async ({ page, homePage }) => {
+
+
+        await homePage.navigate()
+
+        const links: any = await page.$$eval('a', anchor => {
+            return anchor.map(el => el.href).filter(href => href.startsWith('http'))
+        })
+        let brokenCount = 0
+        for (const href of links) {
+            try {
+                const response = await page.request.get(href!, { timeout: 30000 })
+                if (!response.ok()) {
+                    console.log(`❌ Broken link (bad status): ${href} — Status: ${response.status()}`)
+                    brokenCount++
+                } else {
+                    console.log(`✅ Valid link: ${href} — Status: ${response.status()}`)
+                }
+            } catch (error) {
+                console.log(`❌ Broken link (timeout or error): ${href} — Error: ${error.message}`)
+                brokenCount++
+            }
+        }
+        console.log(`🔍 Total links checked: ${links.length}`)
+        console.log(`🚨 Total broken links: ${brokenCount}`)
+
+    })
 })
