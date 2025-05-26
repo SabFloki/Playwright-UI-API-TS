@@ -2,15 +2,16 @@ import { test, expect } from '../../pages/fixtures/pages.fixture'
 
 test.describe('Home', () => {
 
-    test('Open homepage and verify the title', async ({ page }) => {
+    test('Open homepage and verify the title', async ({ page, homePage }) => {
 
-        await page.goto('https://practice.sdetunicorns.com/')
+        await page.goto('/')
+
         //verify title
         await expect(page).toHaveTitle('Practice E-Commerce Site – SDET Unicorns')
     })
 
-    test('Open About page and verify the title', async ({ page }) => {
-        await page.goto('https://practice.sdetunicorns.com/about/')
+    test('Open About page and verify the title', async ({ page, homePage }) => {
+        await page.goto('/about')
         //verify title
         await expect(page).toHaveTitle('About – Practice E-Commerce Site')
         await expect(page).toHaveTitle(/.*Practice E-Commerce Site/)
@@ -18,7 +19,7 @@ test.describe('Home', () => {
 
     test('Click get started button using CSS Selector', async ({ page, homePage }) => {
 
-        await homePage.navigate()
+        await page.goto('/')
         //click the button
         await homePage.getStartedBtn.click()
         //verify url has #get-started
@@ -27,7 +28,7 @@ test.describe('Home', () => {
 
     test('Verify heading text using text selector', async ({ page, homePage }) => {
 
-        await homePage.navigate()
+        await page.goto('/')
 
         //click the button
         const headingText = await homePage.headingText
@@ -38,7 +39,7 @@ test.describe('Home', () => {
 
     test('Verify home link using text and css', async ({ page, homePage }) => {
 
-        await homePage.navigate()
+        await page.goto('/')
 
         //click the button
         const homeText = await homePage.homeText
@@ -49,7 +50,7 @@ test.describe('Home', () => {
 
     test('Verify home link using text and css - method 2', async ({ page, homePage }) => {
 
-        await homePage.navigate()
+        await page.goto('/')
 
         //click the button
         const homeText = await homePage.homeTextCSS
@@ -63,7 +64,7 @@ test.describe('Home', () => {
         const expectedItems = [
             'Home', 'About', 'Shop', 'Blog', 'Contact', 'My account'
         ]
-        await homePage.navigate()
+        await page.goto('/')
 
         const menuItems = await homePage.navLinks
 
@@ -82,7 +83,7 @@ test.describe('Home', () => {
     test('Find broken links on the page and retrieve the numbers', async ({ page, homePage }) => {
 
 
-        await homePage.navigate()
+        await page.goto('/')
 
         const links: any = await page.$$eval('a', anchor => {
             return anchor.map(el => el.href).filter(href => href.startsWith('http'))
@@ -98,7 +99,7 @@ test.describe('Home', () => {
                     console.log(`✅ Valid link: ${href} — Status: ${response.status()}`)
                 }
             } catch (error) {
-                console.log(`❌ Broken link (timeout or error): ${href} — Error: ${error.message}`)
+                console.log(`❌ Broken link (timeout or error): ${href}`)
                 brokenCount++
             }
         }

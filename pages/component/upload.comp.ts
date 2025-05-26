@@ -1,4 +1,6 @@
 import { Page, Locator } from "playwright"
+import path from 'path'
+import { fileURLToPath } from 'url';
 
 class UploadComp {
     private page: Page
@@ -20,6 +22,15 @@ class UploadComp {
 
         await this.message.waitFor({ state: 'visible', timeout: 10000 })
 
+    }
+
+    async setFilePath(file: any) {
+        const __filename = fileURLToPath(import.meta.url);
+        const __dirname = path.dirname(__filename);
+
+        //set filpath of image
+        const filePath = path.join(__dirname, file)
+        return filePath
     }
 }
 
