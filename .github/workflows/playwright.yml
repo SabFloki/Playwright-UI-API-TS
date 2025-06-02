@@ -37,4 +37,4 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           name: Test Results
-          path: test-results
+          path: allure-results
