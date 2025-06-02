@@ -2,9 +2,11 @@ import { test, expect } from '../../pages/fixtures/pages.fixture'
 
 test.describe('Home', () => {
 
-    test('Open homepage and verify the title', async ({ page, homePage }) => {
-
+    test.beforeEach(async ({ page }) => {
         await page.goto('/')
+    })
+
+    test('Open homepage and verify the title', async ({ page, homePage }) => {
 
         //verify title
         await expect(page).toHaveTitle('Practice E-Commerce Site – SDET Unicorns')
@@ -19,7 +21,6 @@ test.describe('Home', () => {
 
     test('Click get started button using CSS Selector', async ({ page, homePage }) => {
 
-        await page.goto('/')
         //click the button
         await homePage.getStartedBtn.click()
         //verify url has #get-started
@@ -27,8 +28,6 @@ test.describe('Home', () => {
     })
 
     test('Verify heading text using text selector', async ({ page, homePage }) => {
-
-        await page.goto('/')
 
         //click the button
         const headingText = await homePage.headingText
@@ -39,8 +38,6 @@ test.describe('Home', () => {
 
     test('Verify home link using text and css', async ({ page, homePage }) => {
 
-        await page.goto('/')
-
         //click the button
         const homeText = await homePage.homeText
 
@@ -49,8 +46,6 @@ test.describe('Home', () => {
     })
 
     test('Verify home link using text and css - method 2', async ({ page, homePage }) => {
-
-        await page.goto('/')
 
         //click the button
         const homeText = await homePage.homeTextCSS
@@ -64,7 +59,6 @@ test.describe('Home', () => {
         const expectedItems = [
             'Home', 'About', 'Shop', 'Blog', 'Contact', 'My account'
         ]
-        await page.goto('/')
 
         const menuItems = await homePage.navLinks
 
@@ -82,8 +76,6 @@ test.describe('Home', () => {
 
     test('Find broken links on the page and retrieve the numbers', async ({ page, homePage }) => {
 
-
-        await page.goto('/')
 
         const links: any = await page.$$eval('a', anchor => {
             return anchor.map(el => el.href).filter(href => href.startsWith('http'))

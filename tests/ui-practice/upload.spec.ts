@@ -1,33 +1,45 @@
 import { test, expect } from '../../pages/fixtures/pages.fixture'
 import path from 'path'
+import fs from 'fs';
+import { fileURLToPath } from 'url';
 
-test.describe('Upload functionality', () => {
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const snapFolderPath = path.join(__dirname, '../../snap');
 
-    test('Upload the file and verify with conditional wait', async ({ page, cartPage }) => {
+const imageFiles = fs
+    .readdirSync(snapFolderPath)
+    .filter(file => /\.(png|jpg|jpeg)$/i.test(file)); // filter image files only
 
-        await page.goto('/cart')
+for (let imageFile of imageFiles) {
+    test.describe('Upload functionality', () => {
 
-        //set filpath of image
-        const filePath = await cartPage.uploadComponent().setFilePath('../../snap/image.png')
+        test(`Upload the file and verify with conditional wait for image - ${imageFile}`, async ({ page, cartPage }) => {
+            const fileImagePath = path.join(snapFolderPath, imageFile);
+            await page.goto('/cart')
 
-        //set the file and click on upload
-        await cartPage.uploadComponent().uploadFile(filePath)
+            //set filpath of image
+            //const filePath = await cartPage.uploadComponent().setFilePath(fileImagePath)
 
-        //assert the uploaded file
-        await expect(cartPage.uploadComponent().message).toContainText('successfully')
+            //set the file and click on upload
+            await cartPage.uploadComponent().uploadFile(fileImagePath)
+
+            //assert the uploaded file
+            await expect(cartPage.uploadComponent().message).toContainText('successfully')
+        })
+
+        test(`Upload the file and verify with assertion wait for image - ${imageFile}`, async ({ page, cartPage }) => {
+
+            const fileImagePath = path.join(snapFolderPath, imageFile);
+            await page.goto('/cart')
+
+            //set filpath of image
+            //const filePath = await cartPage.uploadComponent().setFilePath(fileImagePath)
+
+            //set the file and click on upload
+            await cartPage.uploadComponent().uploadFile(fileImagePath)
+            //assert the uploaded file
+            await expect(page.locator('#wfu_messageblock_header_1_1')).toContainText('successfully', { timeout: 10000 })
+        })
     })
-
-    test('Upload the file and verify with assertion wait', async ({ page, cartPage }) => {
-
-        await page.goto('/cart')
-
-        //set filpath of image
-        //set filpath of image
-        const filePath = await cartPage.uploadComponent().setFilePath('../../snap/image.png')
-
-        //set the file and click on upload
-        await cartPage.uploadComponent().uploadFile(filePath)
-        //assert the uploaded file
-        await expect(page.locator('#wfu_messageblock_header_1_1')).toContainText('successfully', { timeout: 10000 })
-    })
-})
+}
