@@ -29,11 +29,12 @@ jobs:
 
       - name: Run Playwright Tests and Generate Report
         run: |
-          npx playwright test --reporter=html
+          npm run ui-test
           echo "Test run complete"
 
-      - name: Upload Playwright HTML Report
+      - name: Upload test results
+        if: always()
         uses: actions/upload-pages-artifact@v3
         with:
-          name: playwright-report
-          path: playwright-report
+          name: Test Results
+          path: allure-results
