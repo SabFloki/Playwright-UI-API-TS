@@ -1,4 +1,4 @@
-import { Page, Locator } from "playwright"
+import { Page } from "playwright"
 import UploadComp from "./component/upload.comp"
 
 class CartPage {

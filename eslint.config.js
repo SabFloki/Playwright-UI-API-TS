@@ -27,4 +27,7 @@ export default [
       ...eslintPluginPlaywright.configs.recommended.rules,
     },
   },
+  {
+    ignores: ['playwright.config.ts', 'env.config.ts'],
+  },
 ];

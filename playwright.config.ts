@@ -1,8 +1,13 @@
+/**
+ * Playwright Test Configuration
+ * Author: Sab
+import tsParser                  from '@typescript-eslint/parser';tice Site
+ */
 import { defineConfig, devices } from '@playwright/test';
-import { ENVIRONMENTS } from './env.config.ts'
+import { ENVIRONMENTS } from './env.config.js'
 
-const ENV = (process.env.ENV as ENVIRONMENTS) || "qa"
-const baseURL = ENVIRONMENTS[ENV]
+const envKey = (process.env.ENV as keyof typeof ENVIRONMENTS) || "test"
+const baseURL = ENVIRONMENTS[envKey]
 
 /**
  * Read environment variables from file.
