@@ -15,7 +15,7 @@ class UploadComp {
         this.message = page.locator('#wfu_messageblock_header_1_1')
     }
 
-    async uploadFile(filePath: any) {
+    async uploadFile(filePath: string) {
         await this.page.setInputFiles('input#upfile_1', filePath)
 
         await this.uploadBtn.click()
@@ -24,7 +24,7 @@ class UploadComp {
 
     }
 
-    async setFilePath(file: any) {
+    async setFilePath(file: string) {
         const __filename = fileURLToPath(import.meta.url);
         const __dirname = path.dirname(__filename);
 

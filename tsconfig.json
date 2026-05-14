@@ -1,12 +1,14 @@
 {
   "compilerOptions": {
     "target": "ES2020",
-    "module": "commonjs",
+    "module": "es2022",
     "strict": true,
     "esModuleInterop": true,
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
     "outDir": "dist",
     "types": ["node", "playwright"]
   },
@@ -14,7 +16,9 @@
     "tests/**/*.ts",
     "pages/**/*.ts",
     "fixtures/**/*.ts",
-    "utils/**/*.ts"
+    "utils/**/*.ts",
+    "playwright.config.ts",
+    "env.config.ts"
   ],
   "exclude": ["node_modules", "dist"]
 }

@@ -2,7 +2,6 @@ import { Page, Locator } from "playwright"
 
 class HomePage {
     page: Page
-    locator: Locator
     getStartedBtn: Locator
     headingText: Locator
     homeText: Locator
